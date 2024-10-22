@@ -1,5 +1,5 @@
 import { useTranslations } from 'next-intl';
-import { getTranslations, unstable_setRequestLocale } from 'next-intl/server';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 
 
 import { Link } from '~/components/link';
@@ -24,7 +24,7 @@ interface Props {
 }
 
 export default function Login({ params: { locale } }: Props) {
-  unstable_setRequestLocale(locale);
+  setRequestLocale(locale);
 
   const t = useTranslations('Login');
 
