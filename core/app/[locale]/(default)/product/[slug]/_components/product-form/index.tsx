@@ -52,7 +52,7 @@ export const Submit = ({ data: product }: Props) => {
   const { isSubmitting } = formState;
 
   return (
-    <AddToCartButton data={product} loading={isSubmitting}>
+    <AddToCartButton data={product} loading={isSubmitting} className='rounded-full shadow-lg'>
       <ShoppingCart className="mr-2" />
     </AddToCartButton>
   );
@@ -157,15 +157,8 @@ export const ProductForm = ({ data: product }: Props) => {
 
         <div className="mt-4 flex flex-col gap-4 @md:flex-row">
           <Submit data={product} />
-
-          {/* NOT IMPLEMENTED YET */}
-          <div className="w-full">
-            <Button disabled type="submit" variant="secondary">
-              <Heart aria-hidden="true" className="mr-2" />
-              <span>{t('saveToWishlist')}</span>
-            </Button>
-          </div>
         </div>
+        
       </form>
     </FormProvider>
   );

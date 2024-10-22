@@ -8,7 +8,10 @@ import { revalidate } from '~/client/revalidate-target';
 import { ProductCardCarousel } from '~/components/product-card-carousel';
 import { ProductCardCarouselFragment } from '~/components/product-card-carousel/fragment';
 import { Slideshow } from '~/components/slideshow';
+import { Hero } from '~/components/hero';
 import { LocaleType } from '~/i18n/routing';
+import { Container } from '~/components/container';
+import { BentoCards } from '~/components/bento-cards';
 
 const HomePageQuery = graphql(
   `
@@ -22,6 +25,13 @@ const HomePageQuery = graphql(
           }
         }
         featuredProducts(first: 12) {
+          edges {
+            node {
+              ...ProductCardCarouselFragment
+            }
+          }
+        }
+          bestSellingProducts(first: 4,hideOutOfStock: true) {
           edges {
             node {
               ...ProductCardCarouselFragment
@@ -55,25 +65,32 @@ export default async function Home({ params: { locale } }: Props) {
 
   const featuredProducts = removeEdgesAndNodes(data.site.featuredProducts);
   const newestProducts = removeEdgesAndNodes(data.site.newestProducts);
+  const topProducts = removeEdgesAndNodes(data.site.bestSellingProducts);
 
   return (
     <>
-      <Slideshow />
+      <Hero />
 
-      <div className="my-10">
+      <Container>
+      <div className="my-16">
+      <ProductCardCarousel
+          products={topProducts}
+          showCart={false}
+          showCompare={false}
+          title="Top Sellers"
+        />
         <ProductCardCarousel
           products={featuredProducts}
           showCart={false}
           showCompare={false}
-          title={t('Carousel.featuredProducts')}
+          title="New Arrivals"
         />
-        <ProductCardCarousel
-          products={newestProducts}
-          showCart={false}
-          showCompare={false}
-          title={t('Carousel.newestProducts')}
-        />
+     
       </div>
+      </Container>
+
+      <BentoCards />
+
     </>
   );
 }

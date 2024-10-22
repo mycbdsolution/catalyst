@@ -12,6 +12,7 @@ import { getBlogPageData } from './page-data';
 interface Props {
   params: {
     blogId: string;
+    path: string;
   };
 }
 
@@ -80,7 +81,7 @@ export default async function Blog({ params: { blogId } }: Props) {
       <div className="mb-10 text-base" dangerouslySetInnerHTML={{ __html: blogPost.htmlBody }} />
       <div className="mb-10 flex">
         {blogPost.tags.map((tag) => (
-          <Link className="me-3 block cursor-pointer" href={`/blog/tag/${tag}`} key={tag}>
+          <Link className="me-3 block cursor-pointer" href={`/articles/tag/${tag}`} key={tag}>
             <Tag content={tag} />
           </Link>
         ))}

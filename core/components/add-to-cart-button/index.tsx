@@ -46,6 +46,7 @@ export const AddToCartButton = ({
       loading={loading}
       loadingText={t('processing')}
       type="submit"
+      variant="primary"
     >
       {children}
       {buttonText()}

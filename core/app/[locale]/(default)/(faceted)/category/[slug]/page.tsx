@@ -16,6 +16,8 @@ import { CategoryViewed } from './_components/category-viewed';
 import { SubCategories } from './_components/sub-categories';
 import { getCategoryPageData } from './page-data';
 
+import { Container } from '~/components/container';
+
 interface Props {
   params: {
     slug: string;
@@ -67,6 +69,7 @@ export default async function Category({ params: { locale, slug }, searchParams 
   const { hasNextPage, hasPreviousPage, endCursor, startCursor } = productsCollection.pageInfo;
 
   return (
+    <Container>
     <div className="group">
       <Breadcrumbs category={category} />
       <div className="md:mb-8 lg:flex lg:flex-row lg:items-center lg:justify-between">
@@ -130,6 +133,7 @@ export default async function Category({ params: { locale, slug }, searchParams 
       </div>
       <CategoryViewed category={category} categoryId={categoryId} products={products} />
     </div>
+    </Container>
   );
 }
 

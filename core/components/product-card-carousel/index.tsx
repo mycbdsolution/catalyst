@@ -24,7 +24,7 @@ export const ProductCardCarousel = ({
 
   const items = products.map((product) => (
     <ProductCard
-      imageSize="tall"
+      imageSize="square"
       key={product.entityId}
       product={product}
       showCart={showCart}

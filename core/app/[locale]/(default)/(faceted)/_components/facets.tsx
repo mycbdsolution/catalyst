@@ -203,7 +203,7 @@ export const Facets = ({ facets, pageType }: Props) => {
 
               return (
                 <Link
-                  className="flex flex-row flex-nowrap py-2"
+                  className="flex flex-row flex-nowrap py-2 text-gold"
                   href={{ search: `?${search.toString()}` }}
                   key={key}
                 >

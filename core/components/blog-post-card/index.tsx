@@ -17,7 +17,7 @@ export const BlogPostCard = ({ data }: Props) => {
       author={data.author ?? undefined}
       content={data.plainTextSummary}
       date={format.dateTime(new Date(data.publishedDate.utc))}
-      href={`/blog/${data.entityId}`}
+      href={data.path}
       image={
         data.thumbnailImage
           ? { altText: data.thumbnailImage.altText, src: data.thumbnailImage.url }

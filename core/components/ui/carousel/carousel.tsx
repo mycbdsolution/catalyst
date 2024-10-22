@@ -105,7 +105,7 @@ const Carousel = ({ className, title, pageSize = 4, products, ...props }: Props)
       {...props}
     >
       <div className="flex items-center justify-between">
-        <h2 className="text-3xl font-black lg:text-4xl" id={titleId}>
+        <h2 className="text-3xl font-black lg:text-5xl tracking-tight text-primary" id={titleId}>
           {title}
         </h2>
         <span className="no-wrap flex">

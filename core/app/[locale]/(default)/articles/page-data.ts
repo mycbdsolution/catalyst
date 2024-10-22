@@ -25,6 +25,7 @@ const BlogPostsPageQuery = graphql(
               edges {
                 node {
                   entityId
+                  path
                   ...BlogPostCardFragment
                 }
               }

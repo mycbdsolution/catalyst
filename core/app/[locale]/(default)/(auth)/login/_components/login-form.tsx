@@ -4,6 +4,8 @@ import { useTranslations } from 'next-intl';
 import { ChangeEvent, useState } from 'react';
 import { useFormState, useFormStatus } from 'react-dom';
 
+
+
 import { Link } from '~/components/link';
 import { Button } from '~/components/ui/button';
 import {
@@ -17,8 +19,13 @@ import {
 } from '~/components/ui/form';
 import { Message } from '~/components/ui/message';
 
+import { CbdIcon } from '~/components/custom-icons';
+
+
 import { useAccountStatusContext } from '../../../account/(tabs)/_components/account-status-provider';
 import { login } from '../_actions/login';
+
+
 
 const SubmitButton = () => {
   const { pending } = useFormStatus();
@@ -26,10 +33,10 @@ const SubmitButton = () => {
 
   return (
     <Button
-      className="md:w-auto"
+      className="md:w-full shadow-md rounded-full"
       loading={pending}
       loadingText={t('Form.submitting')}
-      variant="primary"
+      variant="subtle"
     >
       {t('Form.logIn')}
     </Button>
@@ -45,6 +52,8 @@ export const LoginForm = () => {
   const { accountState } = useAccountStatusContext();
 
   const isFormInvalid = state?.status === 'error';
+
+
 
   const handleInputValidation = (e: ChangeEvent<HTMLInputElement>) => {
     const validationStatus = e.target.validity.valueMissing;
@@ -75,9 +84,23 @@ export const LoginForm = () => {
           <p>{t('Form.error')}</p>
         </Message>
       )}
-      <Form action={formAction} className="mb-14 flex flex-col gap-3 md:p-8 lg:p-0">
-        <Field className="relative space-y-2 pb-7" name="email">
-          <FieldLabel htmlFor="email">{t('Form.emailLabel')}</FieldLabel>
+    
+      
+         
+    <Form action={formAction} className="p-7 sm:p-11">
+            <div className="flex items-start">
+            <Link href="/" title="Home">
+        
+            <CbdIcon key="cbd" />
+              </Link>
+            </div>
+            <h1 className="mt-8 text-base/6 font-medium">Welcome back!</h1>
+            <p className="mt-1 text-sm/5 text-gray-600">
+              Sign in to your account to continue.
+            </p>
+
+            <Field className="mt-8 space-y-3" name="email">
+              <FieldLabel htmlFor="email">{t('Form.emailLabel')}</FieldLabel>
           <FieldControl asChild>
             <Input
               autoComplete="email"
@@ -86,6 +109,7 @@ export const LoginForm = () => {
               onChange={handleInputValidation}
               onInvalid={handleInputValidation}
               required
+              autoFocus
               type="email"
             />
           </FieldControl>
@@ -95,38 +119,51 @@ export const LoginForm = () => {
           >
             {t('Form.enterEmailMessage')}
           </FieldMessage>
-        </Field>
-        <Field className="relative space-y-2 pb-7" name="password">
-          <FieldLabel htmlFor="password">{t('Form.passwordLabel')}</FieldLabel>
-          <FieldControl asChild>
-            <Input
-              error={!isPasswordValid}
-              id="password"
-              onChange={handleInputValidation}
-              onInvalid={handleInputValidation}
-              required
-              type="password"
-            />
-          </FieldControl>
-          <FieldMessage
-            className="absolute inset-x-0 bottom-0 inline-flex w-full text-sm text-error"
-            match="valueMissing"
-          >
-            {t('Form.entePasswordMessage')}
-          </FieldMessage>
-        </Field>
-        <div className="flex flex-col items-start md:flex-row md:items-center md:justify-start md:gap-10">
-          <FormSubmit asChild>
-            <SubmitButton />
-          </FormSubmit>
-          <Link
-            className="my-5 inline-flex items-center justify-start font-semibold text-primary hover:text-secondary md:my-0"
-            href="/login/forgot-password"
-          >
-            {t('Form.forgotPassword')}
-          </Link>
-        </div>
-      </Form>
+            </Field>
+
+            <Field className="mt-8 space-y-3" name="password">
+              <FieldLabel htmlFor="password">{t('Form.passwordLabel')}</FieldLabel>
+              <FieldControl asChild>
+                <Input
+                  error={!isPasswordValid}
+                  id="password"
+                  onChange={handleInputValidation}
+                  onInvalid={handleInputValidation}
+                  required
+                  type="password"
+                />
+              </FieldControl>
+              <FieldMessage
+                className="absolute inset-x-0 bottom-0 inline-flex w-full text-sm text-error"
+                match="valueMissing"
+              >
+                {t('Form.entePasswordMessage')}
+              </FieldMessage>
+            </Field>
+
+           
+
+            <div className="mt-8">
+              <FormSubmit asChild>
+                <SubmitButton />
+              </FormSubmit>
+            </div>
+
+            <div className="mt-8 flex items-center justify-center text-sm/5">
+              <Link href="/login/forgot-password" className=" text-gray-300">
+                {t('Form.forgotPassword')}
+              </Link>
+            </div>
+
+          </Form>
+          <div className="m-1.5 rounded-lg bg-gray-50 py-4 text-center text-sm/5 ring-1 ring-black/5">
+            Don't have a login?{' '}
+            <Link href="/register" className="font-semibold hover:text-gray-600">
+             Create an account
+            </Link>
+          </div>
+
+
     </>
   );
 };

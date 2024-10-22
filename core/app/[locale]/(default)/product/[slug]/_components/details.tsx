@@ -1,9 +1,16 @@
 import { removeEdgesAndNodes } from '@bigcommerce/catalyst-client';
 import { useFormatter, useTranslations } from 'next-intl';
 
+import { Link } from '~/components/link';
+
 import { PricingFragment } from '~/client/fragments/pricing';
+
+
 import { ProductItemFragment } from '~/client/fragments/product-item';
 import { FragmentOf, graphql } from '~/client/graphql';
+
+import { DisplayName } from './display-name';
+import { Warranty } from './warranty';
 
 import { ProductForm } from './product-form';
 import { ProductFormFragment } from './product-form/fragment';
@@ -42,8 +49,10 @@ export const DetailsFragment = graphql(
       }
       brand {
         name
+        path
       }
       ...PricingFragment
+
     }
   `,
   [
@@ -52,6 +61,7 @@ export const DetailsFragment = graphql(
     ProductFormFragment,
     ProductItemFragment,
     PricingFragment,
+
   ],
 );
 
@@ -65,16 +75,24 @@ export const Details = ({ product }: Props) => {
 
   const customFields = removeEdgesAndNodes(product.customFields);
 
+
   const showPriceRange =
     product.prices?.priceRange.min.value !== product.prices?.priceRange.max.value;
 
   return (
     <div>
       {product.brand && (
-        <p className="mb-2 font-semibold uppercase text-gray-500">{product.brand.name}</p>
+       <Link href={product.brand?.path} className=" text-gray-300">
+       <p className="mb-2 uppercase underline text-zinc-500">{product.brand.name}</p>
+                     </Link>
       )}
 
-      <h1 className="mb-4 text-4xl font-black lg:text-5xl">{product.name}</h1>
+
+
+
+      <h1 className="mb-4 text-4xl font-black lg:text-5xl"><DisplayName product={product} /></h1>
+
+   
 
       <ReviewSummary data={product} />
 
@@ -128,7 +146,7 @@ export const Details = ({ product }: Props) => {
                   </span>
                 </>
               ) : (
-                product.prices.price.value && (
+                product.prices.price.value && ( 
                   <span>
                     {format.number(product.prices.price.value, {
                       style: 'currency',
@@ -142,64 +160,12 @@ export const Details = ({ product }: Props) => {
         </div>
       )}
 
+
+      <Warranty product={product} />
+
       <ProductForm data={product} />
 
-      <div className="my-12">
-        <h2 className="mb-4 text-xl font-bold md:text-2xl">{t('additionalDetails')}</h2>
-        <div className="grid gap-3 sm:grid-cols-2">
-          {Boolean(product.sku) && (
-            <div>
-              <h3 className="font-semibold">{t('sku')}</h3>
-              <p>{product.sku}</p>
-            </div>
-          )}
-          {Boolean(product.upc) && (
-            <div>
-              <h3 className="font-semibold">{t('upc')}</h3>
-              <p>{product.upc}</p>
-            </div>
-          )}
-          {Boolean(product.minPurchaseQuantity) && (
-            <div>
-              <h3 className="font-semibold">{t('minPurchase')}</h3>
-              <p>{product.minPurchaseQuantity}</p>
-            </div>
-          )}
-          {Boolean(product.maxPurchaseQuantity) && (
-            <div>
-              <h3 className="font-semibold">{t('maxPurchase')}</h3>
-              <p>{product.maxPurchaseQuantity}</p>
-            </div>
-          )}
-          {Boolean(product.availabilityV2.description) && (
-            <div>
-              <h3 className="font-semibold">{t('availability')}</h3>
-              <p>{product.availabilityV2.description}</p>
-            </div>
-          )}
-          {Boolean(product.condition) && (
-            <div>
-              <h3 className="font-semibold">{t('condition')}</h3>
-              <p>{product.condition}</p>
-            </div>
-          )}
-          {Boolean(product.weight) && (
-            <div>
-              <h3 className="font-semibold">{t('weight')}</h3>
-              <p>
-                {product.weight?.value} {product.weight?.unit}
-              </p>
-            </div>
-          )}
-          {Boolean(customFields) &&
-            customFields.map((customField) => (
-              <div key={customField.entityId}>
-                <h3 className="font-semibold">{customField.name}</h3>
-                <p>{customField.value}</p>
-              </div>
-            ))}
-        </div>
-      </div>
+   
       <ProductSchema product={product} />
     </div>
   );

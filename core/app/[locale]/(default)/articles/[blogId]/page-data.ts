@@ -16,6 +16,7 @@ const BlogPageQuery = graphql(
               author
               htmlBody
               name
+              path
               publishedDate {
                 utc
               }

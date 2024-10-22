@@ -24,9 +24,21 @@ export const ProductCard = ({
 }: Props) => {
   const format = useFormatter();
 
-  const { name, entityId, defaultImage, brand, path, prices } = product;
+  const { name, entityId, defaultImage, brand, path, prices, customFields } = product;
 
   const price = pricesTransformer(prices, format);
+
+  //const customFields = (product.customFields);
+
+  const displayName = product.customFields?.edges?.find((edge) => edge?.node?.name === 'Display Name')?.node?.value;
+
+
+
+
+
+
+
+
 
   return (
     <ComponentProductCard
@@ -36,7 +48,7 @@ export const ProductCard = ({
       image={defaultImage ? { src: defaultImage.url, altText: defaultImage.altText } : undefined}
       imagePriority={imagePriority}
       imageSize={imageSize}
-      name={name}
+      name={displayName}
       price={price}
       showCompare={showCompare}
       subtitle={brand?.name}

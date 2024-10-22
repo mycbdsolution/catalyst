@@ -80,7 +80,7 @@ const ProductCard = ({
       </div>
     </div>
     <div className={cn('flex flex-1 flex-col gap-1', Boolean(addToCart) && 'justify-end')}>
-      {subtitle ? <p className="text-base text-gray-500">{subtitle}</p> : null}
+      {subtitle ? <p className="text-base text-zinc-400">{subtitle}</p> : null}
       <h3 className="text-xl font-bold lg:text-2xl">
         <Link
           className="focus-visible:outline focus-visible:outline-4 focus-visible:outline-offset-2 focus-visible:outline-primary/20 focus-visible:ring-0"
@@ -90,6 +90,8 @@ const ProductCard = ({
           {name}
         </Link>
       </h3>
+
+
       <div className="flex flex-wrap items-end justify-between pt-1">
         {Boolean(price) &&
           (typeof price === 'object' ? (

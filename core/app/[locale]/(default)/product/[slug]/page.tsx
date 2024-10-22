@@ -7,13 +7,15 @@ import { Suspense } from 'react';
 import { Breadcrumbs } from '~/components/breadcrumbs';
 import { LocaleType } from '~/i18n/routing';
 
+import { Container } from '~/components/container';
 import { Description } from './_components/description';
 import { Details } from './_components/details';
 import { Gallery } from './_components/gallery';
 import { ProductViewed } from './_components/product-viewed';
 import { RelatedProducts } from './_components/related-products';
 import { Reviews } from './_components/reviews';
-import { Warranty } from './_components/warranty';
+import { Specs } from './_components/custom-fields';
+
 import { getProduct } from './page-data';
 
 interface Props {
@@ -92,13 +94,17 @@ export default async function Product({ params: { locale, slug }, searchParams }
   return (
     <>
       {category && <Breadcrumbs category={category} />}
+      <div className="mx-auto max-w-2xl lg:max-w-screen-lg">
 
       <div className="mb-12 mt-4 lg:grid lg:grid-cols-2 lg:gap-8">
         <Gallery product={product} />
         <Details product={product} />
         <div className="lg:col-span-2">
           <Description product={product} />
-          <Warranty product={product} />
+          <Specs product={product} />
+
+
+        
           <Suspense fallback={t('loading')}>
             <Reviews productId={product.entityId} />
           </Suspense>
@@ -110,6 +116,9 @@ export default async function Product({ params: { locale, slug }, searchParams }
       </Suspense>
 
       <ProductViewed product={product} />
+
+
+      </div>
     </>
   );
 }

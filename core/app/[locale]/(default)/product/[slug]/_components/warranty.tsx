@@ -21,8 +21,7 @@ export const Warranty = ({ product }: Props) => {
 
   return (
     <>
-      <h2 className="mb-4 mt-8 text-xl font-bold md:text-2xl">{t('heading')}</h2>
-      <p>{product.warranty}</p>
+      <div className="prose prose-ul:mt-0 prose-li:mt-0 prose-li:mb-0" dangerouslySetInnerHTML={{ __html: product.warranty }} />
     </>
   );
 };
